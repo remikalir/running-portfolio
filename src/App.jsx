@@ -72,7 +72,7 @@ const DATA = {
       cadence:"85 spm",stride:"1.38 m",steps:"30,504",calories:"10,911",
       te:"5.0 aer / 2.1 anaer",vo2:"65",maxPace:"6:00/mi",
       photo:"https://remikalir.com/wp-content/uploads/2026/03/remi_ashevillemarathon_portfolio3-scaled.jpg",
-      photoCaption:"Approaching the finish in Asheville — 2:59:27",
+      photoCaption:"Enjoying downtown Asheville on my way to a 2:59:27 finish",
       hrZones:[{z:"Zone 1–3",min:3.9,pct:2},{z:"Zone 4",min:31.3,pct:17},{z:"Zone 5",min:141.1,pct:79},{z:"Zone 6",min:3.1,pct:2}],
       segments:[],
       training:[{w:"-6",r:7,mi:31},{w:"-5",r:7,mi:35},{w:"-4",r:7,mi:46},{w:"-3",r:7,mi:44},{w:"-2",r:7,mi:32},{w:"-1",r:4,mi:19}],
