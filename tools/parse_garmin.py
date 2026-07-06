@@ -24,12 +24,22 @@ from collections import defaultdict, Counter
 
 CM_PER_MI = 160934.4
 RUN_TYPES = {"running", "treadmill_running", "indoor_running", "track_running"}
-FITNESS_DIR = os.path.join(os.path.dirname(__file__), "..", "raw", "Fitness", "DI-Connect-Fitness")
+RAW_DIR = os.path.join(os.path.dirname(__file__), "..", "raw")
 
 
 def load_activities():
+    # Search anywhere under raw/ for the activity files, so the exact folder
+    # nesting of a fresh Garmin export doesn't matter — just drop the unzipped
+    # DI-Connect-Fitness folder (or the whole export) into raw/ and run.
+    files = sorted(glob.glob(os.path.join(RAW_DIR, "**", "*summarizedActivities.json"), recursive=True))
+    if not files:
+        raise SystemExit(
+            "No summarizedActivities.json found under raw/.\n"
+            "Unzip your Garmin GDPR export and copy its DI-Connect-Fitness folder\n"
+            "into running-portfolio/raw/, then run this again."
+        )
     acts = []
-    for f in sorted(glob.glob(os.path.join(FITNESS_DIR, "*summarizedActivities.json"))):
+    for f in files:
         acts += json.load(open(f))[0]["summarizedActivitiesExport"]
     return acts
 
