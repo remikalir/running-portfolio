@@ -1,145 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-
-const DATA = {
-  summary: { totalRuns: 2273, totalMiles: 16897, totalHours: 1830, pr5k: "16:53", prHalf: "1:18:55", prMarathon: "2:58:45", prMile: "5:20", vo2: 65, avgPerWeek: 4.8, countries: 4, usStates: 16, cities: 45 },
-  yearly: [
-    {year:2017,runs:207,miles:1603,pace:"6:30",paceN:6.51},{year:2018,runs:235,miles:1894,pace:"6:19",paceN:6.32},
-    {year:2019,runs:219,miles:1627,pace:"6:17",paceN:6.29},{year:2020,runs:201,miles:1591,pace:"6:14",paceN:6.24},
-    {year:2021,runs:288,miles:1938,pace:"6:20",paceN:6.35},{year:2022,runs:299,miles:1944,pace:"6:38",paceN:6.64},
-    {year:2023,runs:231,miles:1924,pace:"6:21",paceN:6.36},{year:2024,runs:260,miles:1887,pace:"6:32",paceN:6.53},
-    {year:2025,runs:263,miles:2035,pace:"6:58",paceN:6.97},{year:2026,runs:70,miles:455,pace:"7:10",paceN:7.18},
-  ],
-  monthly: [
-    {m:"2017-01",mi:7},{m:"2017-02",mi:91},{m:"2017-03",mi:146},{m:"2017-04",mi:123},{m:"2017-05",mi:151},{m:"2017-06",mi:161},{m:"2017-07",mi:155},{m:"2017-08",mi:147},{m:"2017-09",mi:149},{m:"2017-10",mi:132},{m:"2017-11",mi:170},{m:"2017-12",mi:173},
-    {m:"2018-01",mi:173},{m:"2018-02",mi:120},{m:"2018-03",mi:167},{m:"2018-04",mi:144},{m:"2018-05",mi:177},{m:"2018-06",mi:155},{m:"2018-07",mi:183},{m:"2018-08",mi:187},{m:"2018-09",mi:179},{m:"2018-10",mi:159},{m:"2018-11",mi:147},{m:"2018-12",mi:101},
-    {m:"2019-01",mi:129},{m:"2019-02",mi:126},{m:"2019-03",mi:138},{m:"2019-04",mi:163},{m:"2019-05",mi:169},{m:"2019-06",mi:165},{m:"2019-07",mi:168},{m:"2019-08",mi:148},{m:"2019-09",mi:68},{m:"2019-10",mi:94},{m:"2019-11",mi:126},{m:"2019-12",mi:134},
-    {m:"2020-01",mi:155},{m:"2020-02",mi:73},{m:"2020-03",mi:144},{m:"2020-04",mi:147},{m:"2020-05",mi:168},{m:"2020-06",mi:157},{m:"2020-07",mi:179},{m:"2020-08",mi:151},{m:"2020-09",mi:134},{m:"2020-10",mi:157},{m:"2020-11",mi:125},
-    {m:"2021-01",mi:79},{m:"2021-02",mi:155},{m:"2021-03",mi:161},{m:"2021-04",mi:178},{m:"2021-05",mi:175},{m:"2021-06",mi:161},{m:"2021-07",mi:175},{m:"2021-08",mi:176},{m:"2021-09",mi:170},{m:"2021-10",mi:183},{m:"2021-11",mi:173},{m:"2021-12",mi:152},
-    {m:"2022-01",mi:162},{m:"2022-02",mi:65},{m:"2022-03",mi:154},{m:"2022-04",mi:155},{m:"2022-05",mi:173},{m:"2022-06",mi:160},{m:"2022-07",mi:166},{m:"2022-08",mi:170},{m:"2022-09",mi:180},{m:"2022-10",mi:201},{m:"2022-11",mi:184},{m:"2022-12",mi:175},
-    {m:"2023-01",mi:193},{m:"2023-02",mi:170},{m:"2023-03",mi:190},{m:"2023-04",mi:172},{m:"2023-05",mi:194},{m:"2023-06",mi:164},{m:"2023-07",mi:110},{m:"2023-08",mi:188},{m:"2023-09",mi:165},{m:"2023-10",mi:180},{m:"2023-11",mi:167},{m:"2023-12",mi:30},
-    {m:"2024-01",mi:89},{m:"2024-02",mi:143},{m:"2024-03",mi:181},{m:"2024-04",mi:141},{m:"2024-05",mi:187},{m:"2024-06",mi:163},{m:"2024-07",mi:170},{m:"2024-08",mi:180},{m:"2024-09",mi:162},{m:"2024-10",mi:183},{m:"2024-11",mi:134},{m:"2024-12",mi:156},
-    {m:"2025-01",mi:163},{m:"2025-02",mi:161},{m:"2025-03",mi:169},{m:"2025-04",mi:176},{m:"2025-05",mi:180},{m:"2025-06",mi:167},{m:"2025-07",mi:179},{m:"2025-08",mi:173},{m:"2025-09",mi:173},{m:"2025-10",mi:157},{m:"2025-11",mi:173},{m:"2025-12",mi:164},
-    {m:"2026-01",mi:172},{m:"2026-02",mi:151},{m:"2026-03",mi:132},
-  ],
-  paces: [{p:"5:00",c:1},{p:"5:30",c:14},{p:"6:00",c:628},{p:"6:30",c:1017},{p:"7:00",c:379},{p:"7:30",c:80},{p:"8:00",c:53},{p:"8:30",c:51},{p:"9:00",c:29},{p:"9:30",c:10},{p:"10:00+",c:8}],
-  weekday: [{d:"Mon",r:41,mi:235},{d:"Tue",r:468,mi:3202},{d:"Wed",r:416,mi:2603},{d:"Thu",r:376,mi:2075},{d:"Fri",r:394,mi:3451},{d:"Sat",r:152,mi:778},{d:"Sun",r:426,mi:4554}],
-  vo2: [{d:"2023-07",v:61.8},{d:"2023-10",v:63.9},{d:"2024-01",v:62.5},{d:"2024-04",v:66.2},{d:"2024-07",v:68.6},{d:"2024-10",v:68.4},{d:"2025-01",v:67.9},{d:"2025-04",v:67.0},{d:"2025-07",v:68.0},{d:"2025-10",v:66.0},{d:"2026-01",v:65.0},{d:"2026-03",v:65.0}],
-  bio: [{y:2017,c:83.8,s:1.45},{y:2018,c:84.8,s:1.48},{y:2019,c:86.4,s:1.46},{y:2020,c:86.2,s:1.48},{y:2021,c:86.3,s:1.43},{y:2022,c:85.5,s:1.38},{y:2023,c:87.6,s:1.42},{y:2024,c:86.1,s:1.41},{y:2025,c:84.7,s:1.35},{y:2026,c:84.4,s:1.28}],
-  homes: [
-    {name:"Denver, CO",dates:"2017–2024",runs:1390,miles:10190,pace:"6:23",note:"7 years at altitude, City Park loops"},
-    {name:"Cambridge, MA",dates:"Aug 2022–Jun 2023",runs:224,miles:1881,pace:"6:33",note:"11 months along the Charles"},
-    {name:"Winston-Salem, NC",dates:"Jul 2024–present",runs:370,miles:2785,pace:"7:01",note:"Ultra & marathon training base"},
-  ],
-  locations: [
-    {name:"Denver",runs:1390,mi:10190},{name:"Winston-Salem",runs:370,mi:2785},{name:"Cambridge",runs:224,mi:1881},
-    {name:"Altadena/Pasadena",runs:46,mi:322},{name:"Camden, NJ",runs:7,mi:58},{name:"Littleton, CO",runs:6,mi:42},
-    {name:"Dublin",runs:3,mi:23},{name:"Nashville",runs:3,mi:17},{name:"Ann Arbor",runs:3,mi:26},
-    {name:"Chicago",runs:3,mi:28},{name:"Toronto",runs:3,mi:24},{name:"Vancouver",runs:3,mi:28},
-    {name:"San Diego",runs:3,mi:19},{name:"Ocean City",runs:3,mi:18},{name:"Boston",runs:3,mi:15},
-  ],
-  usStatesMap: {
-    'Colorado':{runs:1478,mi:10840},'North Carolina':{runs:373,mi:2847},'Massachusetts':{runs:227,mi:1896},
-    'California':{runs:57,mi:411},'New Jersey':{runs:7,mi:58},'Maryland':{runs:5,mi:32},
-    'New York':{runs:4,mi:39},'Illinois':{runs:3,mi:28},'Tennessee':{runs:3,mi:17},
-    'Michigan':{runs:3,mi:26},'Missouri':{runs:2,mi:20},'Pennsylvania':{runs:2,mi:17},
-    'Rhode Island':{runs:2,mi:19},'New Mexico':{runs:1,mi:7},'Virginia':{runs:1,mi:9},
-    'Kentucky':{runs:1,mi:11},
-  },
-  usStates: [
-    {name:"Colorado",runs:1478,mi:10840,cities:"Denver, Boulder, Littleton, Aurora"},{name:"North Carolina",runs:373,mi:2847,cities:"Winston-Salem, Asheville, Burke County"},{name:"Massachusetts",runs:227,mi:1896,cities:"Cambridge, Boston"},
-    {name:"California",runs:57,mi:411,cities:"Altadena/Pasadena, San Diego, SF"},{name:"New Jersey",runs:7,mi:58,cities:"Camden"},{name:"Maryland",runs:5,mi:32,cities:"Annapolis, Ocean City"},
-    {name:"New York",runs:4,mi:39,cities:"NYC, Troy"},{name:"Illinois",runs:3,mi:28,cities:"Chicago"},{name:"Tennessee",runs:3,mi:17,cities:"Nashville"},
-    {name:"Michigan",runs:3,mi:26,cities:"Ann Arbor"},{name:"Missouri",runs:2,mi:20,cities:"St. Louis"},{name:"Pennsylvania",runs:2,mi:17,cities:"Pottstown, Edgmont"},
-    {name:"Rhode Island",runs:2,mi:19,cities:"Middletown"},{name:"New Mexico",runs:1,mi:7,cities:"Albuquerque"},{name:"Virginia",runs:1,mi:9,cities:"Fredericksburg"},
-    {name:"Kentucky",runs:1,mi:11,cities:"Lexington"},
-  ],
-  longest: [
-    {date:"2025-10-25",name:"Fonta Flora 50K",mi:32.4,pace:"8:54"},{date:"2026-01-03",name:"Frosty 50 2026",mi:31.4,pace:"7:39"},
-    {date:"2026-03-21",name:"Asheville Marathon",mi:26.3,pace:"6:49"},{date:"2025-12-14",name:"Long run",mi:21.0,pace:"7:38"},
-    {date:"2025-11-23",name:"Long run",mi:21.0,pace:"7:36"},{date:"2026-03-01",name:"Long run",mi:21.0,pace:"6:52"},
-  ],
-  fastest: [
-    {date:"2024-10-23",mi:4.0,pace:"5:28"},{date:"2026-03-04",mi:4.0,pace:"5:30"},
-    {date:"2024-09-04",mi:4.0,pace:"5:31"},{date:"2024-10-16",mi:4.0,pace:"5:33"},
-    {date:"2024-10-30",mi:4.0,pace:"5:34"},{date:"2026-02-18",mi:5.0,pace:"5:35"},
-  ],
-  countries: [{name:"United States",runs:2169,mi:16277,detail:"16 states, 37 cities"},{name:"Canada",runs:7,mi:60,detail:"3 cities"},{name:"Ireland",runs:5,mi:43,detail:"Dublin, Galway"},{name:"China",runs:3,mi:20,detail:"Shanghai, Suzhou"}],
-  featured: [
-    {
-      id:"asheville",title:"Asheville Marathon",subtitle:"Sub-3:00 · BQ · 3rd Masters",
-      date:"March 21, 2026",location:"Asheville, NC",distance:"26.30 mi (42.3 km)",
-      time:"2:59:27",pace:"6:49/mi",elev:"+941 / −1,161 ft (net downhill)",hr:"167 avg / 188 max",
-      cadence:"85 spm",stride:"1.38 m",steps:"30,504",calories:"10,911",
-      te:"5.0 aer / 2.1 anaer",vo2:"65",maxPace:"6:00/mi",
-      photo:"https://remikalir.com/wp-content/uploads/2026/03/remi_ashevillemarathon_portfolio3-scaled.jpg",
-      photoCaption:"Enjoying downtown Asheville on my way to a 2:59:27 finish",
-      hrZones:[{z:"Zone 1–3",min:3.9,pct:2},{z:"Zone 4",min:31.3,pct:17},{z:"Zone 5",min:141.1,pct:79},{z:"Zone 6",min:3.1,pct:2}],
-      segments:[],
-      training:[{w:"-6",r:7,mi:31},{w:"-5",r:7,mi:35},{w:"-4",r:7,mi:46},{w:"-3",r:7,mi:44},{w:"-2",r:7,mi:32},{w:"-1",r:4,mi:19}],
-      goals:["Break 3:00:00","Boston Marathon qualifier","Masters Division podium"],
-      results:["2:59:27 — sub-3 by 33 seconds","BQ time achieved (qualifying standard: 3:25:00)","3rd place, Masters Division"],
-      narrative:"The goal was sub-3:00 and I cleared it with 33 seconds to spare — also qualifying for Boston and placing third in the Masters Division. This was my marathon debut, built on a foundation of ultra training including a Frosty 50 in January (31.4 mi at 7:39/mi) and months of volume. The Asheville course is net downhill (−220 ft) but features punchy climbs totaling 941 ft of gain. I ran the entire race at threshold — 79% of the time in HR zone 5, peaking at 188 bpm. The 6:49/mi average was remarkably even. The last long run — a 21-miler at 6:52/mi — came 20 days before, and race week was a classic taper to 19 miles.",
-    },
-    {
-      id:"fonta-flora",title:"Fonta Flora 50K",subtitle:"First ultramarathon · Sub-5:00",
-      date:"October 25, 2025",location:"Burke County, NC",distance:"32.38 mi (52.1 km)",
-      time:"4:48:12",pace:"8:54/mi",elev:"+3,523 ft (1,074 m)",hr:"157 avg / 176 max",
-      cadence:"81 spm",stride:"1.11 m",steps:"46,886",calories:"15,516",
-      te:"5.0 aerobic",vo2:"66",maxPace:"6:50/mi",
-      photo:"https://remikalir.com/wp-content/uploads/2026/03/remi_fontaflora_portfolio1-scaled.jpeg",
-      photoCaption:"On the Fonta Flora trail in the Blue Ridge foothills",
-      hrZones:[{z:"Zone 1–2",min:5.2,pct:2},{z:"Zone 3",min:17.6,pct:6},{z:"Zone 4",min:152.6,pct:53},{z:"Zone 5",min:112.8,pct:39}],
-      segments:[
-        {n:1,mi:9.4,min:85,pace:"9:01",note:"Controlled start through rolling hills"},
-        {n:2,mi:4.9,min:40,pace:"8:01",note:"Fastest segment — found a rhythm"},
-        {n:3,mi:6.7,min:55,pace:"8:13",note:"Holding steady through the middle"},
-        {n:4,mi:5.7,min:47,pace:"8:11",note:"Last comfortable segment"},
-        {n:5,mi:2.2,min:21,pace:"9:36",note:"Fatigue sets in, pace drops"},
-        {n:6,mi:1.8,min:18,pace:"10:10",note:"Grinding through the final miles"},
-        {n:7,mi:0.6,min:6,pace:"9:48",note:"Short rolling segment"},
-        {n:8,mi:0.8,min:8,pace:"10:04",note:"Push to the finish"},
-      ],
-      training:[{w:"-6",r:5,mi:41},{w:"-5",r:5,mi:35},{w:"-4",r:6,mi:45},{w:"-3",r:6,mi:44},{w:"-2",r:5,mi:33},{w:"-1",r:4,mi:19}],
-      goals:["Finish first ultramarathon","Break 5:00:00"],
-      results:["Finished in 4:48:12 — sub-5 by nearly 12 minutes","32.38 miles with 3,523 ft of climbing on trail"],
-      narrative:"My first ultra — 50 kilometers through the Blue Ridge foothills on the Fonta Flora trail. The course featured relentless rolling terrain with 3,523 ft of climbing across 10 aid-station segments. I went out conservatively, holding 8:00–8:13/mi through the first four segments (26.8 miles), then slowed to 9:36–10:10/mi as fatigue set in over the final 5.6 miles. Heart rate stayed high — 92% of the race in zones 4–5 — and cadence dropped from 84 to 82 spm as stride shortened. The 6-week build peaked at 45 miles in week -4, tapering to 19 miles race week. Nearly 47,000 steps and 15,500 calories — the biggest day in the dataset by a wide margin.",
-    },
-    {
-      id:"mistletoe",title:"2024 Mistletoe Run",subtitle:"Half marathon PR · 1st Masters · 8th overall",
-      date:"December 7, 2024",location:"Winston-Salem, NC",distance:"13.23 mi (21.3 km)",
-      time:"1:18:55",pace:"5:57/mi",elev:"+492 ft",hr:"N/A (sensor issue)",
-      cadence:"88 spm",stride:"1.52 m",steps:"13,938",calories:"5,560",
-      te:"2.2 aerobic",vo2:"—",maxPace:"5:12/mi",
-      hrZones:[],segments:[],
-      training:[{w:"-6",r:7,mi:47},{w:"-5",r:7,mi:37},{w:"-4",r:7,mi:42},{w:"-3",r:5,mi:42},{w:"-2",r:2,mi:12},{w:"-1",r:3,mi:22}],
-      goals:["Win Masters Division","Target sub-1:20"],
-      results:["1:18:55 — half marathon PR by 6 seconds","1st place, Masters Division","8th place overall"],
-      prContext:[
-        {date:"2024-12-07",time:"1:18:55",pace:"5:57",loc:"Winston-Salem",pr:true},
-        {date:"2022-10-30",time:"1:19:01",pace:"6:01",loc:"Cambridge"},
-        {date:"2022-10-16",time:"1:19:58",pace:"6:06",loc:"Cambridge"},
-        {date:"2022-11-13",time:"1:20:35",pace:"6:05",loc:"Boston"},
-        {date:"2021-02-28",time:"1:20:51",pace:"6:12",loc:"Denver"},
-      ],
-      narrative:"After 31 half-marathon-distance runs across 7 years, I broke through the 1:19 barrier at the Mistletoe Run in Winston-Salem — winning the Masters Division and placing 8th overall. The 5:57/mi average was my fastest ever over 13+ miles, 6 seconds quicker than my previous best set in Cambridge two years earlier. Biomechanics were dialed: 88 spm cadence and a 1.52 m stride, both distance bests. The course has moderate hills (492 ft gain), and cool December conditions were ideal. A sharp taper — 47 miles six weeks out, dropping to just 12 miles two weeks before — left me fresh.",
-    },
-    {
-      id:"salem-lake",title:"Salem Lake 30K",subtitle:"3rd place overall",
-      date:"September 28, 2024",location:"Winston-Salem, NC",distance:"18.90 mi (30.4 km)",
-      time:"2:02:03",pace:"6:27/mi",elev:"+1,686 ft",hr:"156 avg / 174 max",
-      cadence:"85 spm",stride:"1.45 m",steps:"20,920",calories:"7,684",
-      te:"5.0 aerobic",vo2:"69",maxPace:"5:24/mi",
-      hrZones:[],segments:[],
-      training:[{w:"-6",r:5,mi:35},{w:"-5",r:6,mi:45},{w:"-4",r:7,mi:44},{w:"-3",r:7,mi:35},{w:"-2",r:5,mi:39},{w:"-1",r:4,mi:31}],
-      goals:["Complete first Salem Lake 30K","Compete for a podium finish"],
-      results:["2:02:03 finish time","3rd place overall","VO2 max reading of 69 — season peak"],
-      narrative:"My first Salem Lake 30K — a hilly loop course around Salem Lake in Winston-Salem with 1,686 ft of climbing over 18.9 miles. I came in third place overall at a 6:27/mi pace, which at the time was my fastest effort at any distance beyond a half marathon. The course is demanding — the elevation profile never lets up — and my max pace hit 5:24/mi on the downhills. Heart rate averaged 156 with a max of 174, and Garmin recorded a VO2 max of 69, my peak for the year. This race marked the beginning of my move into longer distances, setting the stage for the Fonta Flora 50K and the Asheville Marathon that followed.",
-    },
-  ],
-  photos: {
-    frosty: "https://remikalir.com/wp-content/uploads/2026/03/remi_frosty50_portfolio2-scaled.jpg",
-  },
-};
+import { DATA } from "./data.js";
+import { CONTENT } from "./content.js";
 
 const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const TABS=["overview","mileage","pace","geography","records","featured","about"];
@@ -283,7 +144,7 @@ function AboutTab(){
   return <div style={{maxWidth:720}}>
     {/* Hero photo */}
     <div style={{marginBottom:32,borderRadius:12,overflow:"hidden"}}>
-      <img src={DATA.photos.frosty} alt="Remi running the Frosty 50" style={{width:"100%",height:"auto",display:"block",borderRadius:12}} loading="lazy"/>
+      <img src={CONTENT.photos.frosty} alt="Remi running the Frosty 50" style={{width:"100%",height:"auto",display:"block",borderRadius:12}} loading="lazy"/>
       <div style={{fontSize:12,color:C.ft,fontStyle:"italic",marginTop:8,textAlign:"center"}}>Frosty 50 · Winston-Salem · January 2026</div>
     </div>
 
@@ -334,7 +195,7 @@ export default function RunningPortfolio(){
           <h1 style={{fontSize:36,fontWeight:700,letterSpacing:"-1.5px",margin:0}}>Running portfolio</h1>
           <span style={{fontSize:14,color:C.purple,fontWeight:500}}>Remi Kalir</span>
         </div>
-        <p style={{fontSize:15,color:C.mu,marginTop:8,lineHeight:1.5}}>2,273 runs across 9 years, 4 countries, and 16 U.S. states — Jan 2017 to Mar 2026</p>
+        <p style={{fontSize:15,color:C.mu,marginTop:8,lineHeight:1.5}}>{DATA.summary.totalRuns.toLocaleString()} runs across {DATA.summary.countries} countries and {DATA.summary.usStates} U.S. states — Dec 2016 to Jun 2026</p>
       </header>
       <nav style={{display:"flex",gap:0,borderBottom:`1px solid ${C.ln}`,marginBottom:32,overflowX:"auto"}}>
         {TABS.map(t=><button key={t} onClick={()=>setTab(t)} style={{padding:"14px 18px",fontSize:13,fontWeight:tab===t?600:400,letterSpacing:"0.02em",textTransform:"uppercase",border:"none",background:"none",cursor:"pointer",borderBottom:tab===t?`2px solid ${C.purple}`:"2px solid transparent",color:tab===t?C.purple:C.mu,transition:"all 0.2s",whiteSpace:"nowrap"}}>{t}</button>)}
@@ -359,7 +220,7 @@ export default function RunningPortfolio(){
             <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:i===2?C.purple:C.pl+"50"}}/>
             <div style={{fontSize:16,fontWeight:600,marginBottom:4}}>{h.name}</div><div style={{fontSize:12,color:C.mu,marginBottom:12}}>{h.dates}</div>
             <div style={{fontSize:13,lineHeight:1.8}}><span style={{fontFamily:"'DM Mono',monospace",fontWeight:500}}>{h.runs.toLocaleString()}</span> runs · <span style={{fontFamily:"'DM Mono',monospace",fontWeight:500}}>{h.miles.toLocaleString()}</span> mi · <span style={{fontFamily:"'DM Mono',monospace"}}>{h.pace}</span>/mi</div>
-            <div style={{fontSize:12,color:C.ft,marginTop:8,fontStyle:"italic"}}>{h.note}</div></div>)}
+            <div style={{fontSize:12,color:C.ft,marginTop:8,fontStyle:"italic"}}>{CONTENT.homeNotes[h.name]}</div></div>)}
         </div>
         <Sec>Day of week</Sec>
         <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:8,marginBottom:36}}>
@@ -440,7 +301,7 @@ export default function RunningPortfolio(){
           {DATA.locations.map((l,i)=><div key={l.name} style={{display:"grid",gridTemplateColumns:"140px 1fr 80px 70px",alignItems:"center",gap:10,padding:"7px 0",borderBottom:`1px solid ${C.lf}`}}>
             <span style={{fontSize:13,fontWeight:i<3?600:400}}>{l.name}{i<3&&<span style={{fontSize:9,color:C.purple,marginLeft:6,verticalAlign:"super"}}>HOME</span>}</span>
             <Bar value={l.runs} max={maxLR} height={14} color={i<3?C.purple:C.pl+"50"}/><span style={{fontSize:12,fontFamily:"'DM Mono',monospace",textAlign:"right"}}>{l.mi.toLocaleString()} mi</span><span style={{fontSize:12,fontFamily:"'DM Mono',monospace",textAlign:"right",color:C.mu}}>{l.runs}</span></div>)}
-          <div style={{fontSize:12,color:C.ft,marginTop:8}}>+ 30 more cities with 1–2 runs each</div></div>}
+          <div style={{fontSize:12,color:C.ft,marginTop:8}}>+ {DATA.moreCities} more cities with 1–2 runs each</div></div>}
         {geoMode==="countries"&&<div style={{marginBottom:36}}>{DATA.countries.map((ct,i)=><div key={ct.name} style={{display:"flex",alignItems:"center",gap:16,padding:"14px 0",borderBottom:`1px solid ${C.ln}`}}>
           <div style={{width:36,height:36,borderRadius:8,background:C.pf,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:600,color:C.purple}}>{["US","CA","IE","CN"][i]}</div>
           <div style={{flex:1}}><div style={{fontSize:15,fontWeight:500}}>{ct.name}</div><div style={{fontSize:12,color:C.mu,marginTop:2}}>{ct.detail}</div></div>
@@ -452,7 +313,7 @@ export default function RunningPortfolio(){
             <div style={{position:"absolute",left:-23,top:20,width:12,height:12,borderRadius:"50%",border:`2px solid ${C.purple}`,background:i===2?C.purple:"#fff"}}/>
             <div style={{fontSize:12,color:C.mu,marginBottom:3}}>{h.dates}</div><div style={{fontSize:16,fontWeight:600,marginBottom:4}}>{h.name}</div>
             <div style={{fontSize:13,color:C.mu}}>{h.runs.toLocaleString()} runs · {h.miles.toLocaleString()} miles · {h.pace}/mi avg</div>
-            <div style={{fontSize:12,color:C.ft,fontStyle:"italic",marginTop:4}}>{h.note}</div></div>)}
+            <div style={{fontSize:12,color:C.ft,fontStyle:"italic",marginTop:4}}>{CONTENT.homeNotes[h.name]}</div></div>)}
         </div>
       </>}
 
@@ -472,7 +333,7 @@ export default function RunningPortfolio(){
       {/* FEATURED */}
       {tab==="featured"&&<>
         <div style={{marginBottom:12}}><Sec sub="Detailed analyses of four key races from the past 18 months">Featured races</Sec></div>
-        {DATA.featured.map(race=><RaceCard key={race.id} race={race} isOpen={openRace===race.id} onToggle={()=>setOpenRace(openRace===race.id?null:race.id)}/>)}
+        {CONTENT.featured.map(race=><RaceCard key={race.id} race={race} isOpen={openRace===race.id} onToggle={()=>setOpenRace(openRace===race.id?null:race.id)}/>)}
       </>}
 
       {/* ABOUT */}
@@ -480,7 +341,7 @@ export default function RunningPortfolio(){
 
       <footer style={{padding:"32px 0",borderTop:`1px solid ${C.ln}`,marginTop:24,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
         <span style={{fontSize:12,color:C.ft}}>Data from Garmin Connect GDPR export · Built with Claude</span>
-        <span style={{fontSize:12,color:C.ft}}>Last updated Mar 2026</span>
+        <span style={{fontSize:12,color:C.ft}}>Last updated Jul 2026</span>
       </footer>
     </div>);
 }
