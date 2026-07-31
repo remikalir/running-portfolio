@@ -89,6 +89,7 @@ export const CONTENT = {
   // so they intentionally aren't reflected in the portfolio totals until the
   // next data refresh — see microblogNote.
   microblog: [
+    { date: "2026-07-31", body: "left food said good morning with some brief pangs but more importantly, no ab dullness or core pain, easy 4.7 out-and-back to Reynolda with calm-ish HR and relaxed pace, off tomorrow, I need to stretch."},
     { date: "2026-07-29", body: "this is the kind of recovery run that builds my confidence, set the treadmill at 7 mph and relaxed into 5 miles, focused entirely on breath and settling my heart rate, pleased to see avg HR at 131 in low zone 3. A little dull ache in left abs around mile 3, faded as with other runs. Rest tomorrow."},
     { date: "2026-07-28", body: "4.1 in the neighborhood, no pain including in lower abdominal and that's a first since I started running, felt very comfortable and could feel my pace increasing and focus sharpening. I've got an engine and I could finally feel it dormant beneath the surface today. 7:47 avg, 140 HR, goal tomorrow is low HR on treadmill to shake out." },
     { date: "2026-07-26", body: "after a day of rest and lots of stretching ran 6 through Reynolda village (first run outdoors post-op), minor pain and hard stiffness in lower right abdominal around mile 4 (similar to mesh feeling on last two runs), but that dissipated and I was generally relaxed, legs felt fine at 8:12 avg pace, HR a little high at the start but I'll take the 149 avg for the run." },
