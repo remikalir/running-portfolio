@@ -89,7 +89,7 @@ export const CONTENT = {
   // so they intentionally aren't reflected in the portfolio totals until the
   // next data refresh — see microblogNote.
   microblog: [
-    { date: "2026-08-07", body: "stretched out a slow-ish 9 on the WFU cross country trails, I’m tired but totaled 25 miles this week as I rebuild, I'll take that."},
+    { date: "2026-08-09", body: "stretched out a slow-ish 9 on the WFU cross country trails, I’m tired but totaled 25 miles this week as I rebuild, I'll take that."},
     { date: "2026-08-07", body: "7 in the neighborhood and Reynolda, picked up the pace to get my HR slightly higher, mostly focused."},
     { date: "2026-08-05", body: "what a gift to enjoy a boring run without pain, 5:30a at the Y, 4 easy on the treadmill, mostly zone 2 HR, rest tomorrow."},
     { date: "2026-08-04", body: "5.1 modified Tuesday in the neighborhood, got my HR up, pace down a tad, no abdominal pain, almost kind of felt like a runner for a moment."},
