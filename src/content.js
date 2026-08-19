@@ -89,6 +89,7 @@ export const CONTENT = {
   // so they intentionally aren't reflected in the portfolio totals until the
   // next data refresh — see microblogNote.
   microblog: [
+    { date: "2026-08-17", body: "Week of Aug 10: Ran another 25 miles last week, settled into some easy runs including a low HR treadmill session that provided good comparative HR data with week before, plus a little speed, and some time in the pool. Sunday at the lake was probably a little fast at 6:30/40s given the heat, but I limited that run to only 8 miles. Now I start a three-week training build to get past 40-miles a week and prep for the Salem Lake 30K."},
     { date: "2026-08-09", body: "stretched out a slow-ish 9 on the WFU cross country trails, I’m tired but totaled 25 miles this week as I rebuild, I'll take that."},
     { date: "2026-08-07", body: "7 in the neighborhood and Reynolda, picked up the pace to get my HR slightly higher, mostly focused."},
     { date: "2026-08-05", body: "what a gift to enjoy a boring run without pain, 5:30a at the Y, 4 easy on the treadmill, mostly zone 2 HR, rest tomorrow."},
