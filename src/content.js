@@ -89,6 +89,7 @@ export const CONTENT = {
   // so they intentionally aren't reflected in the portfolio totals until the
   // next data refresh — see microblogNote.
   microblog: [
+    { date: "2026-08-24", body: "Week of Aug 17: 29 miles and mostly a disappointing realization that my aerobic ceiling is much lower two months post surgery, my durability at zone 2/3 comfortable HR has been compromised at about an hour, and that my cardiovascular drift (pace/HR) is real in this August heat and humidity. VO2 max is decreasing and I’m struggling to settle into a recovery rhythm that allows me to train, fuel with consistency, and enjoy the journey. This was the first of a three week rebuild into longer mileage and it felt pretty terrible with a dose of meh."},
     { date: "2026-08-17", body: "Week of Aug 10: Ran another 25 miles last week, settled into some easy runs including a low HR treadmill session that provided good comparative HR data with week before, plus a little speed, and some time in the pool. Sunday at the lake was probably a little fast at 6:30/40s given the heat, but I limited that run to only 8 miles. Now I start a three-week training build to get past 40-miles a week and prep for the Salem Lake 30K."},
     { date: "2026-08-09", body: "stretched out a slow-ish 9 on the WFU cross country trails, I’m tired but totaled 25 miles this week as I rebuild, I'll take that."},
     { date: "2026-08-07", body: "7 in the neighborhood and Reynolda, picked up the pace to get my HR slightly higher, mostly focused."},
