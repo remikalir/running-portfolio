@@ -110,7 +110,7 @@ export const CONTENT = {
     { date: "2026-07-24", body: "long stretch and a mile walk then 3.5 on the indoor track at the Y, higher HR compared to yesterday but I felt as relaxed as could be, no pain. some stiffness on left side morning after, doc mentioned I might feel the mesh as I get back into physical activity, presume this is what she meant." },
     { date: "2026-07-23", body: "had my one-month post-op yesterday, cleared to start light physical activity and running, doc noted that pain would be my indicator if I was pushing too hard, should listen to my body. Walked a mile first then 3.1 on the treadmill at the Y, very slow pace, breathing only through my nose, no pain, some stiffness on right side. No pain later in the day or next morning." },
   ],
-  microblogNote: "My notes log runs as they happen. The totals elsewhere in this portfolio reflect the last Garmin export (updated June 20, 2026), so my runs mentioned here aren't counted in total miles, runs, and hours yet — these data will fold in at the next refresh.",
+  microblogNote: "My notes log runs as they happen. The totals elsewhere in this portfolio reflect the last Garmin export (updated Oct 10, 2026), so my runs mentioned here aren't counted in total miles, runs, and hours yet - these data will fold in at the next refresh.",
 
   // Timeline "trips away" for the Geography → When ribbon.
   //   Home BANDS come from data.js `homes` (generated).
