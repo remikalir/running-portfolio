@@ -79,6 +79,65 @@ export const CONTENT = {
     records: "celebrating my personal records from both races and training",
     featured: "featuring four recent races—two road, two trail—around North Carolina",
     log: "\"all that raw land that rolls... and all that road going...\"",
+    training: "designing and learning from my bespoke training system",
+  },
+
+  // ── TRAINING (a preview of the private training system) ──────
+  // Your words. The images in public/training/ are invented data drawn by the
+  // private training site in its preview mode (running-training repo:
+  // tools/demo_data.py, checked by tools/demo_check.py); no real data. Cards
+  // render in this order; a card with two figures stacks them.
+  training: {
+    intro: "Drawing from a decade of quantitative data, this portfolio curates, synthesizes, and visually presents stories about my life as a runner. As I detail in the About section, I collaborated with Claude to produce this portfolio. I am also using Claude, almost every day, to analyze how I now run, to improve how I’m training, and to gain insight about trends in my fitness as I make measured progress toward long-term goals like the 131st Boston Marathon next spring. Whereas this public portfolio tells stories from summative data, my private training system is attuned to an accumulating dataset that knows my heart rate bands and actual lactate threshold, that includes a library of my real running routes, and that enables me to compare efficiency across specific segments of road or trail. This system far surpasses analytic insight available from Garmin Connect (the service synced to my watch), and Claude and I have also designed it to be more individually responsive than paid training platforms like Intervals or RUNALYZE. Because this private system includes all kinds of personal information (such as geographic and temporal data, performance and health metrics, and my qualitative notes), the data presented here are illustrative: what you see in this section are data from invented runs on real routes through Cambridge and Boston (I chose this area because our family lived in Cambridge for about a year). Every number, date and plan is made up for illustrative purposes; no map, date, route or measurement from the real system appears. This public running portfolio and my private training system are two complementary designs.",
+    diagram: {
+      eyebrow: "Two complementary designs",
+      title: "A public portfolio, a private system",
+      note: "No data, real or invented, flows from the training system to the portfolio; only these images do.",
+    },
+    cards: [
+      { eyebrow: "This week", title: "Did the week go as planned?", figures: [
+        { src: "/training/1-this-week.webp",
+          alt: "One invented week: plan against actual for each day, with distance bars toned by heart-rate band",
+          caption: "An invented weekly schedule, with planned runs against completed. Each bar is a day's distance, toned by the time spent in each heart-rate band; the moss tick is the planned distance. The ledger at left sums the week. One flag from analysis: Saturday spent six minutes above the easy-day ceiling on a warm morning." }
+      ] },
+      { eyebrow: "The build", title: "Where am I in the block?", figures: [
+        { src: "/training/2-the-build.webp",
+          alt: "Week 5 of a ten-week block: weekly miles against the plan and each phase's outline, with tests and races marked",
+          caption: "Week 5 of a hypothetical ten-week training block toward a spring half marathon. Weekly miles against the plan (moss ticks) and each phase's outline (pale bands), with the threshold test, a tune-up 10K and the goal race marked above; below, the longest run of each week." }
+      ] },
+      { eyebrow: "Run", title: "What happened today, against the plan's ceiling?", figures: [
+        { src: "/training/3a-run-steady.webp",
+          alt: "One steady run: a ledger of the run beside heart rate, pace and elevation over time, with the steady stretch shaded",
+          caption: "A synthetic steady Tuesday along the Charles River. The shaded stretch runs between two presses of the lap button; inside it, heart rate holds the plan's target band, under the ceiling, while pace settles near 7:00. The ledger at left summarizes the run." }
+      ] },
+      { eyebrow: "Trends", title: "Is efficiency moving?", figures: [
+        { src: "/training/4a-trends-efficiency.webp",
+          alt: "Efficiency on each of four routes over fifteen weeks, one dot per easy or long run",
+          caption: "Efficiency, speed per heartbeat, on four generic routes in and around Cambridge: one dot per easy or long run over fifteen weeks. Each route is compared only with itself, so the ground stays constant; the slow rise of about 3% is aerobic fitness. The low last dot on the Emerald Necklace is that warm Saturday." },
+        { src: "/training/4b-trends-decoupling.webp",
+          alt: "Heart-rate drift from the first to the second half of each easy run, all below five percent",
+          caption: "Decoupling: how far heart rate drifts from the first half of an easy run to the second. Long runs sit highest; none reaches the 5% line." }
+      ] },
+      { eyebrow: "Compare", title: "Same ground, two days", figures: [
+        { src: "/training/5-compare.webp",
+          alt: "Two three-lap runs at Fresh Pond six weeks apart, compared segment by segment and folded onto one lap",
+          caption: "Three laps of an invented Fresh Pond run, six weeks apart. Above, each quarter of the loop, lap by lap, compared between the two days (ink: more efficient on the later day; the first two passes fall inside the first five minutes and are left out). Below, both runs folded onto one lap, one line per lap." }
+      ] },
+      { eyebrow: "Track", title: "Is the speed coming?", figures: [
+        { src: "/training/6a-track-ladder.webp",
+          alt: "Seven sessions of 1600 meter repeats, each rep's time, faster higher",
+          caption: "Seven synthetic sessions of 1600 m repeats at Downes Field, with every rep's time (faster is higher), from just over 6:00 to about 5:50; the mean rest below." },
+        { src: "/training/6b-track-inside-reps.webp",
+          alt: "Heart rate in each quarter of each rep of the latest session, against threshold",
+          caption: "Inside each rep of the latest session: heart rate by quarter of the distance, against threshold." }
+      ] },
+    ],
+    closing: {
+      before: "All data on this Training page are synthetic and are intended as illustrative of the real system I use on a daily basis. If you would like to learn more about this system, ",
+      link: "please contact me",
+      href: "https://remikalir.com/contact/",
+      after: ".",
+    },
   },
 
   // ── LOG (microblog) ──────

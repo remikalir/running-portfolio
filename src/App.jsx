@@ -41,7 +41,7 @@ const SANS = "'Instrument Sans',system-ui,sans-serif";
 const MONO = "'DM Mono',monospace";
 const SERIF = "'Fraunces',serif";
 
-const TABS = ["overview", "mileage", "pace", "geography", "trails", "records", "featured", "log", "about"];
+const TABS = ["overview", "mileage", "pace", "geography", "trails", "records", "featured", "training", "log", "about"];
 
 /* ---- small helpers ---- */
 const comma = (n) => Number(n).toLocaleString("en-US");
@@ -1128,6 +1128,101 @@ function AboutTab() {
   );
 }
 
+/* ============================== TRAINING ================================ */
+/* A preview of the private training system (Remi, Nov 2026). Every figure is an
+   image of invented data, drawn by the private site in its preview mode on real
+   Cambridge and Boston routes; no data from that system reaches this portfolio.
+   Words and order from CONTENT.training; images in public/training/. On phones a
+   figure scrolls sideways (ChartScroll) instead of shrinking; a click opens it
+   full size. */
+const T_HEAD = { borderLeft: `2px solid ${C.moss}`, paddingLeft: 20, marginBottom: 18 };
+const T_EYEBROW = { fontFamily: MONO, fontSize: 11, letterSpacing: ".06em", textTransform: "uppercase", color: C.mossDeep, marginBottom: 4 };
+const T_TITLE = { fontFamily: SERIF, fontSize: 24, lineHeight: 1.15, color: C.ink };
+
+function TrainingDiagram() {
+  const box = (x, y, w, t, s) => (
+    <g key={t}>
+      <rect x={x} y={y} width={w} height={54} rx={6} fill="none" stroke={C.rule} strokeWidth={1.2} />
+      <text x={x + 14} y={y + 23} style={{ font: `500 13px ${SANS}`, fill: C.ink }}>{t}</text>
+      <text x={x + 14} y={y + 41} style={{ font: `400 12px ${SANS}`, fill: C.voice }}>{s}</text>
+    </g>
+  );
+  const arrow = (x, y) => <path d={`M${x},${y} H${x + 38}`} stroke={C.ink} strokeWidth={1.2} fill="none" markerEnd="url(#t-ar)" />;
+  const lab = { font: `400 10.5px ${MONO}`, fill: C.mossDeep, letterSpacing: ".06em" };
+  return (
+    <svg viewBox="0 0 840 250" width="100%" role="img"
+      aria-label="The public portfolio is built from a Garmin export; the private training system is built from each run's files on a home computer; only images of invented data cross from the private system to this page">
+      <defs><marker id="t-ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill={C.ink} /></marker></defs>
+      <text x={0} y={16} style={lab}>PUBLIC · THIS PORTFOLIO</text>
+      {box(0, 30, 190, "Garmin GDPR export", "a decade, on request")}{arrow(194, 57)}
+      {box(238, 30, 150, "build pipeline", "totals and stories")}{arrow(392, 57)}
+      {box(436, 30, 190, "run.remikalir.com", "summative, authored")}
+      <text x={0} y={146} style={lab}>PRIVATE · ON MY MAC</text>
+      {box(0, 160, 190, "Garmin FIT + GPX export", "after every run")}{arrow(194, 187)}
+      {box(238, 160, 150, "analysis + plan", "a local database")}{arrow(392, 187)}
+      {box(436, 160, 190, "private training site", "daily + maps, health data")}
+      <line x1={668} y1={18} x2={668} y2={232} stroke={C.leader} strokeDasharray="2 4" />
+      <rect x={700} y={96} width={9} height={9} fill={C.moss} />
+      <text x={716} y={105} style={{ font: `500 13px ${SANS}`, fill: C.ink }}>this page</text>
+      {["invented data,", "drawn by the private", "site, as images"].map((t, i) => (
+        <text key={t} x={700} y={126 + 16 * i} style={{ font: `400 12px ${SANS}`, fill: C.voice }}>{t}</text>
+      ))}
+      <path d="M628,187 C664,187 668,150 694,128" fill="none" stroke={C.moss} strokeWidth={1.5} strokeDasharray="4 3" />
+    </svg>
+  );
+}
+
+function TrainingTab() {
+  const T = CONTENT.training ?? {};
+  const ps = { fontFamily: SANS, fontSize: 15, lineHeight: 1.85, color: "rgba(43,39,35,0.82)", margin: 0, maxWidth: 720 };
+  const cap = { fontFamily: SANS, fontSize: 13.5, lineHeight: 1.65, color: "rgba(43,39,35,0.78)", marginTop: 10, maxWidth: 760 };
+  const fine = { fontFamily: SANS, fontSize: 11, letterSpacing: ".03em", color: C.faintest, lineHeight: 1.6 };
+  return (
+    <div>
+      <Card style={{ marginBottom: 20 }}>
+        <VoiceLine>{CONTENT.voiceLines?.training ?? "…in your words"}</VoiceLine>
+        {T.intro && <p style={ps}>{T.intro}</p>}
+      </Card>
+
+      {T.diagram && (
+        <Card style={{ marginBottom: 20 }}>
+          <div style={T_HEAD}><div style={T_EYEBROW}>{T.diagram.eyebrow}</div><div style={T_TITLE}>{T.diagram.title}</div></div>
+          <ChartScroll minWidth={640}><TrainingDiagram /></ChartScroll>
+          {T.diagram.note && <div style={{ ...fine, marginTop: 8 }}>{T.diagram.note}</div>}
+        </Card>
+      )}
+
+      {(T.cards ?? []).map((c) => (
+        <Card key={c.eyebrow} style={{ marginBottom: 20 }}>
+          <div style={T_HEAD}><div style={T_EYEBROW}>{c.eyebrow}</div><div style={T_TITLE}>{c.title}</div></div>
+          {c.figures.map((f, i) => (
+            <figure key={f.src} style={{ margin: i < c.figures.length - 1 ? "0 0 22px" : 0 }}>
+              <ChartScroll minWidth={760}>
+                <a href={f.src} target="_blank" rel="noopener noreferrer"
+                  style={{ display: "block", borderRadius: 10, overflow: "hidden", boxShadow: "0 0 0 1px rgba(185,174,151,0.55)" }}>
+                  <img src={f.src} alt={f.alt} loading="lazy" style={{ width: "100%", height: "auto", display: "block" }} />
+                </a>
+              </ChartScroll>
+              {f.caption && <figcaption style={cap}>{f.caption}</figcaption>}
+            </figure>
+          ))}
+        </Card>
+      ))}
+
+      {T.closing && (
+        <Card>
+          <p style={{ ...ps, fontSize: 14 }}>
+            {T.closing.before}
+            <a href={T.closing.href} target="_blank" rel="noopener noreferrer"
+              style={{ color: C.mossDeep, textDecoration: "none", borderBottom: `1px solid ${C.moss}` }}>{T.closing.link}</a>
+            {T.closing.after}
+          </p>
+        </Card>
+      )}
+    </div>
+  );
+}
+
 /* ============================== LOG ===================================== */
 /* Authored microblog from CONTENT.microblog, newest first, on a moss spine.
    Body is plain prose — inline pace/HR are the runner's notes, not pipeline
@@ -1207,6 +1302,7 @@ export default function RunningPortfolio() {
           {tab === "trails" && <TrailsAtlas />}
           {tab === "records" && <Records />}
           {tab === "featured" && <Featured />}
+          {tab === "training" && <TrainingTab />}
           {tab === "log" && <LogTab />}
           {tab === "about" && <AboutTab />}
         </main>
