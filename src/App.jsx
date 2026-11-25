@@ -43,6 +43,24 @@ const SERIF = "'Fraunces',serif";
 
 const TABS = ["overview", "mileage", "pace", "geography", "trails", "records", "featured", "training", "log", "about"];
 
+/* ---- addresses ----
+   Each tab lives at #<tab> (run.remikalir.com/#training): a reload stays on the tab, back and forward move between
+   tabs, and any tab can be shared. A link to a tab is a plain href="#<tab>": TabLink in JSX, [words](#tab) in an
+   authored string from content.js (withTabLinks). An empty or unknown hash opens Overview; in-page anchors that are
+   not tabs (About's #about-… sections) leave the tab alone. */
+const hashTab = () => (typeof window !== "undefined" ? decodeURIComponent(window.location.hash.slice(1)) : "");
+const tabFromHash = () => (TABS.includes(hashTab()) ? hashTab() : "overview");
+const LINK = { color: C.mossDeep, textDecoration: "none", borderBottom: `1px solid ${C.moss}` };
+function TabLink({ to, children }) {
+  return <a href={`#${to}`} style={LINK}>{children}</a>;
+}
+function withTabLinks(text) {
+  return String(text).split(/(\[[^\]]+\]\(#[a-z]+\))/g).map((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\(#([a-z]+)\)$/);
+    return m && TABS.includes(m[2]) ? <TabLink key={i} to={m[2]}>{m[1]}</TabLink> : part;
+  });
+}
+
 /* ---- small helpers ---- */
 const comma = (n) => Number(n).toLocaleString("en-US");
 const shortName = (n) => n.split(",")[0];
@@ -192,7 +210,7 @@ function Logo({ width = 220 }) {
 }
 
 /* ============================ OVERVIEW HERO ================================ */
-function Hero({ onOpenLog }) {
+function Hero() {
   const s = DATA.summary;
   const reach = `${monthYear(DATA.span.start).toLowerCase()} – ${monthYear(DATA.span.end).toLowerCase()} · ${s.countries} countries · ${s.usStates} states · ${s.cities} cities`;
   const rows = [
@@ -218,10 +236,10 @@ function Hero({ onOpenLog }) {
           </div>
           <div style={{ fontFamily: SANS, fontSize: 14, lineHeight: 1.6, color: "rgba(43,39,35,0.82)" }}>
             {teaser}{" "}
-            <button onClick={onOpenLog}
-              style={{ fontFamily: SANS, fontSize: 14, color: C.mossDeep, background: "none", border: "none", borderBottom: `1px solid ${C.moss}`, padding: 0, cursor: "pointer", whiteSpace: "nowrap" }}>
+            <a href="#log"
+              style={{ fontFamily: SANS, fontSize: 14, color: C.mossDeep, textDecoration: "none", borderBottom: `1px solid ${C.moss}`, whiteSpace: "nowrap" }}>
               read the log →
-            </button>
+            </a>
           </div>
         </div>
       )}
@@ -1115,7 +1133,7 @@ function AboutTab() {
           <h2 style={h2}>What's Next</h2>
           <div style={qNum}>11.25.26 Update</div>
           <p style={ps}>There's plenty to celebrate as I look back over the past four months. My recovery from bilateral hernia surgery has been generally steady and mostly promising as I consider my long-term health and ability to run and compete. In late September, I completed the Salem Lake 30K in 2:14:44, finishing fifth of 122 runners. I placed second in the Masters division and won my age group (40-44) while running 7:14 average mile pace. That type of result was unimaginable back in July when I could barely walk a few miles in an afternoon. And just two days after that race, I was accepted into the 131st Boston Marathon which will take place on Monday, April 19, 2027. I'm returning to form, with a mix of gratitude and grit, because this hasn't been a linear journey.</p>
-          <p style={ps}>Back in August, I was having real difficulty acclimating to North Carolina's heat and humidity while returning to my regular training. My heart rate was wildly inconsistent and my focus was off. Garmin Connect reported that my training was unproductive, week after week, and my VO2 max measure dropped into the low 60s. So I bought a heart rate monitor. I began sharing data with Claude after every run. I asked Claude lots of questions about target heart rate zones, my efficiency, the impact of heat, and my general ability to recover fitness over time. And the analysis Claude would return to me created a productive feedback loop that has fundamentally transformed my approach to recovery, data-driven training, and running as attuned to my own metrics and goals. My preparation for Boston is now informed by an AI-enabled private training system that I have created using Claude. I can't imagine not using this system on a daily basis. As a complement to this public portfolio, please have a look at the new Training section which shows a synthetic version of my private system (it displays fake data for illustrative purposes, as I explain in that section). Now, after every run, I download a few Garmin files from Connect, drop these files into an "inbox" on my computer, and then Claude and I have a conversation that leads into ongoing analysis and useful insight. If you're a runner who's created a similar system to guide your training, I'd love to chat. Have a look at Training and let me know what you think.</p>
+          <p style={ps}>Back in August, I was having real difficulty acclimating to North Carolina's heat and humidity while returning to my regular training. My heart rate was wildly inconsistent and my focus was off. Garmin Connect reported that my training was unproductive, week after week, and my VO2 max measure dropped into the low 60s. So I bought a heart rate monitor. I began sharing data with Claude after every run. I asked Claude lots of questions about target heart rate zones, my efficiency, the impact of heat, and my general ability to recover fitness over time. And the analysis Claude would return to me created a productive feedback loop that has fundamentally transformed my approach to recovery, data-driven training, and running as attuned to my own metrics and goals. My preparation for Boston is now informed by an AI-enabled private training system that I have created using Claude. I can't imagine not using this system on a daily basis. As a complement to this public portfolio, please have a look at the new <TabLink to="training">Training section</TabLink> which shows a synthetic version of my private system (it displays fake data for illustrative purposes, as I explain in that section). Now, after every run, I download a few Garmin files from Connect, drop these files into an "inbox" on my computer, and then Claude and I have a conversation that leads into ongoing analysis and useful insight. If you're a runner who's created a similar system to guide your training, I'd love to chat. Have a look at Training and let me know what you think.</p>
           <div style={qNum}>07.28.26 Update</div>
           <p style={ps}>I'm currently recuperating from bilateral hernia surgery. Working on this portfolio has been a much-needed connection to my practice when I couldn't run. And I'll share that recovery journey through the microblog of this portfolio.</p>
           <p style={ps}>As for races, I've qualified for the Boston Marathon next spring (my time has been verified by BAA), and I'll submit a registration application in September; fingers-crossed I'm accepted via the lottery. This fall, I'll hopefully complete the Salem Lake 30K and the Mistletoe Half Marathon, each for the third time, though I'll likely run to enjoy the scenery and crowds (and not to competitively race).</p>
@@ -1181,7 +1199,7 @@ function TrainingTab() {
     <div>
       <Card style={{ marginBottom: 20 }}>
         <VoiceLine>{CONTENT.voiceLines?.training ?? "…in your words"}</VoiceLine>
-        {T.intro && <p style={ps}>{T.intro}</p>}
+        {T.intro && <p style={ps}>{withTabLinks(T.intro)}</p>}
       </Card>
 
       {T.diagram && (
@@ -1258,8 +1276,18 @@ function LogTab() {
 
 /* ============================== SHELL =================================== */
 export default function RunningPortfolio() {
-  const [tab, setTab] = useState("overview");
+  const [tab, setTab] = useState(tabFromHash);
   const narrow = useIsNarrow();
+  useEffect(() => {                                  // follow the address: nav, links in the text, back and forward
+    const on = () => {
+      const h = hashTab();
+      if (h !== "" && !TABS.includes(h)) return;     // an in-page anchor, not a tab
+      setTab(h || "overview");
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener("hashchange", on);
+    return () => window.removeEventListener("hashchange", on);
+  }, []);
 
   return (
     <div style={{ background: C.paper, minHeight: "100vh" }}>
@@ -1278,10 +1306,11 @@ export default function RunningPortfolio() {
 
         <nav style={{ display: "flex", gap: 0, borderBottom: `1px solid ${C.leader}`, marginBottom: 28, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
           {TABS.map((t) => (
-            <button
+            <a
               key={t}
-              onClick={() => setTab(t)}
-              style={{
+              href={`#${t}`}
+              aria-current={tab === t ? "page" : undefined}
+              style={{ textDecoration: "none", display: "inline-block",
                 padding: narrow ? "11px 11px" : "12px 16px", fontFamily: SANS, fontSize: 12, letterSpacing: ".08em",
                 textTransform: "uppercase", fontWeight: tab === t ? 500 : 400,
                 border: "none", background: "none", cursor: "pointer",
@@ -1290,12 +1319,12 @@ export default function RunningPortfolio() {
               }}
             >
               {t}
-            </button>
+            </a>
           ))}
         </nav>
 
         <main style={{ paddingBottom: 8 }}>
-          {tab === "overview" && <Hero onOpenLog={() => setTab("log")} />}
+          {tab === "overview" && <Hero />}
           {tab === "mileage" && <Mileage />}
           {tab === "pace" && <Pace />}
           {tab === "geography" && <><Atlas /><div style={{ height: 20 }} /><Timeline /></>}
