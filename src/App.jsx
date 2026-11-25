@@ -1113,6 +1113,7 @@ function AboutTab() {
 
         <section id="about-next" style={sec}>
           <h2 style={h2}>What's Next</h2>
+          <div style={qNum}>07.28.26 Update</div>
           <p style={ps}>I'm currently recuperating from bilateral hernia surgery. Working on this portfolio has been a much-needed connection to my practice when I couldn't run. And I'll share that recovery journey through the microblog of this portfolio.</p>
           <p style={ps}>As for races, I've qualified for the Boston Marathon next spring (my time has been verified by BAA), and I'll submit a registration application in September; fingers-crossed I'm accepted via the lottery. This fall, I'll hopefully complete the Salem Lake 30K and the Mistletoe Half Marathon, each for the third time, though I'll likely run to enjoy the scenery and crowds (and not to competitively race).</p>
           <p style={ps}>And as for data, come early 2027 I'll update this portfolio's analysis using another Garmin GDPR export and utilize the analytic pipeline that Claude has designed. I'm looking forward to that full decade of data, the insights it will provide me, and the stories it can help me to share.</p>

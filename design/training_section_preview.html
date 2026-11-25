@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup · Training section · run.remikalir.com</title>
+<!-- Mockup for review (2026-11-23), not part of the build. The shell copies App.jsx's styles (palette C, Card,
+     VoiceLine, Featured's card head) so the section reads as the portfolio does. Images: design/training_preview/,
+     invented data drawn by the private site in preview mode (running-training tools/demo_data.py; checked by
+     tools/demo_check.py). Bracketed boxes are Remi's to write; captions are Claude's drafts for Remi to revise. -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EDE5D2;--ink:#2E2A24;--inkFig:#2B2723;--moss:#5C7250;--mossDeep:#47593D;--leader:#CBBFA8;--rule:#B9AE97;
+ --voice:#6E6558;--voiceRule:#BCB097;--label:#7C7466;--faint:#8A8175;--faintest:#A79E8C;
+ --sans:'Instrument Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;--serif:'Fraunces',serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+header{padding:48px 0 28px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+header h1{font-family:var(--serif);font-size:34px;font-weight:400;letter-spacing:-.5px;margin:0}
+header span{font-family:var(--mono);font-size:13px;color:var(--mossDeep)}
+nav{display:flex;border-bottom:1px solid var(--leader);margin-bottom:28px;overflow-x:auto}
+nav b{padding:12px 16px;font:400 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap;border-bottom:2px solid transparent}
+nav b.on{color:var(--ink);font-weight:500;border-bottom-color:var(--moss)}
+.card{position:relative;background:var(--paper);border-radius:12px;padding:2rem 2.25rem;margin-bottom:20px}
+.card::after{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;mix-blend-mode:multiply;opacity:.043;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.voice{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--voice);border-bottom:1px dotted var(--voiceRule);padding-bottom:3px;display:inline-block;margin-bottom:22px}
+.yours{border:1px dashed var(--moss);border-radius:8px;padding:14px 16px;color:var(--mossDeep);font-size:14px;line-height:1.7;background:rgba(92,114,80,.06)}
+.yours b{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:6px}
+.p{font-size:15px;line-height:1.85;color:rgba(43,39,35,.82);margin:0 0 18px;max-width:720px}
+.head{border-left:2px solid var(--moss);padding-left:20px;margin-bottom:18px}
+.eyebrow{font:400 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mossDeep);margin-bottom:4px}
+.title{font-family:var(--serif);font-size:24px;line-height:1.15;color:var(--ink)}
+figure{margin:0 0 16px}
+figure a{display:block;border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px rgba(185,174,151,.55)}
+figure img{width:100%;height:auto;display:block}
+figcaption{font-size:13.5px;line-height:1.65;color:rgba(43,39,35,.78);margin-top:10px;max-width:760px}
+figcaption .draft{font:400 10px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--faintest);margin-right:6px}
+.fine{font:400 11px var(--sans);letter-spacing:.03em;color:var(--faintest);line-height:1.6}
+.pair{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+figure,.card{min-width:0}
+.sides{width:100%;height:auto;display:block;margin:4px 0 6px}
+.cs{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}   /* as ChartScroll: on phones a figure scrolls sideways instead of shrinking */
+footer{padding:32px 0;border-top:1px solid var(--leader);margin-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font:400 12px var(--mono);color:var(--faintest)}
+@media (max-width:640px){.cs>a{min-width:760px}.cs>.sides{min-width:640px}header{padding:30px 0 18px}header h1{font-size:27px}.wrap{padding:0 14px}.card{padding:1.3rem 1.15rem}nav b{padding:11px}.title{font-size:21px}}
+</style></head><body><div class="wrap">
+
+<header><h1>Running portfolio</h1><span>Remi Kalir</span></header>
+<nav><b>overview</b><b>mileage</b><b>pace</b><b>geography</b><b>trails</b><b>records</b><b>featured</b><b class="on">training</b><b>log</b><b>about</b></nav>
+
+<!-- 1. voice line and intro: Remi's -->
+<div class="card">
+ <div class="voice">…in your words (this view's one voice line)</div>
+ <div class="yours"><b>Your intro</b>
+  Why the training system exists and what it's for (the daily runs, the build toward Boston); that it's private and
+  stays on your Mac; the two sides of one coin: this portfolio tells stories from summative data, the system helps you
+  read daily training; how it's built with Claude, in two conversations; and that maps are in the real system but left
+  out here for privacy. Then a line that everything below is invented data on real routes.</div>
+</div>
+
+<!-- 2. how the two sides fit (optional) -->
+<div class="card">
+ <div class="head"><div class="eyebrow">Two sides of one coin</div><div class="title">What's public, what stays home</div></div>
+ <div class="cs"><svg class="sides" viewBox="0 0 820 250" role="img" aria-label="The portfolio is built from a Garmin export; the training system runs on a home computer; only invented preview images cross between them">
+  <style>.t{font:500 13px 'Instrument Sans',sans-serif;fill:#2E2A24}.s{font:400 12px 'Instrument Sans',sans-serif;fill:#6E6558}.m{font:400 10.5px 'DM Mono',monospace;fill:#47593D;letter-spacing:.06em}.b{fill:none;stroke:#B9AE97;stroke-width:1.2}.a{stroke:#2E2A24;stroke-width:1.2;fill:none;marker-end:url(#ar)}</style>
+  <defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2E2A24"/></marker></defs>
+  <text class="m" x="0" y="16">PUBLIC · THIS PORTFOLIO</text>
+  <rect class="b" x="0" y="30" width="170" height="54" rx="6"/><text class="t" x="14" y="53">Garmin GDPR export</text><text class="s" x="14" y="71">a decade, on request</text>
+  <path class="a" d="M172,57 H212"/>
+  <rect class="b" x="216" y="30" width="150" height="54" rx="6"/><text class="t" x="230" y="53">build pipeline</text><text class="s" x="230" y="71">totals and stories</text>
+  <path class="a" d="M368,57 H408"/>
+  <rect class="b" x="412" y="30" width="170" height="54" rx="6"/><text class="t" x="426" y="53">run.remikalir.com</text><text class="s" x="426" y="71">summative, authored</text>
+  <text class="m" x="0" y="146">PRIVATE · ON MY MAC</text>
+  <rect class="b" x="0" y="160" width="170" height="54" rx="6"/><text class="t" x="14" y="183">each run's FIT + GPX</text><text class="s" x="14" y="201">the morning after</text>
+  <path class="a" d="M172,187 H212"/>
+  <rect class="b" x="216" y="160" width="150" height="54" rx="6"/><text class="t" x="230" y="183">analysis + plan</text><text class="s" x="230" y="201">a local database</text>
+  <path class="a" d="M368,187 H408"/>
+  <rect class="b" x="412" y="160" width="170" height="54" rx="6"/><text class="t" x="426" y="183">private training site</text><text class="s" x="426" y="201">daily, with maps</text>
+  <line x1="650" y1="18" x2="650" y2="232" stroke="#CBBFA8" stroke-dasharray="2 4"/>
+  <rect x="682" y="96" width="9" height="9" fill="#5C7250"/>
+  <text class="t" x="698" y="105">this page</text>
+  <text class="s" x="682" y="126">invented data,</text><text class="s" x="682" y="142">drawn by the private</text><text class="s" x="682" y="158">site, as images</text>
+  <path d="M584,187 C630,187 640,150 676,128" fill="none" stroke="#5C7250" stroke-width="1.5" stroke-dasharray="4 3"/>
+ </svg></div>
+ <div class="fine">Draft diagram for review: no data, real or invented, flows from the training system to the portfolio; only these images do.</div>
+</div>
+
+<!-- 3. the figures -->
+<div class="card">
+ <div class="head"><div class="eyebrow">This week</div><div class="title">Did the week go as planned?</div></div>
+ <figure><div class="cs"><a href="training_preview/1-this-week.webp"><img src="training_preview/1-this-week.webp" alt="One week of invented runs: plan against actual for each day, with distance bars toned by heart-rate band" loading="lazy"></a></div>
+ <figcaption><span class="draft">draft</span>Seven days, plan against actual. Each bar is a day's distance, toned by the time spent in each heart-rate band; the moss tick is the planned distance. The ledger at left sums the week. One flag: Saturday spent six minutes above the easy-day ceiling on a warm morning.</figcaption></figure>
+</div>
+
+<div class="card">
+ <div class="head"><div class="eyebrow">The build</div><div class="title">Where am I in the block?</div></div>
+ <figure><div class="cs"><a href="training_preview/2-the-build.webp"><img src="training_preview/2-the-build.webp" alt="Week 5 of a 10-week block: weekly miles against the plan and each phase's outline, with tests and races marked" loading="lazy"></a></div>
+ <figcaption><span class="draft">draft</span>Week 5 of a ten-week block toward a spring half marathon. Weekly miles against the plan (moss ticks) and each phase's outline (pale bands), with the threshold test, a tune-up 10K and the goal race marked above; below, the longest run of each week.</figcaption></figure>
+</div>
+
+<div class="card">
+ <div class="head"><div class="eyebrow">Run</div><div class="title">What happened today, against the plan's ceiling?</div></div>
+ <figure><div class="cs"><a href="training_preview/3a-run-steady.webp"><img src="training_preview/3a-run-steady.webp" alt="One steady run: a ledger of the run beside heart rate, pace and elevation over time, with the steady stretch shaded" loading="lazy"></a></div>
+ <figcaption><span class="draft">draft</span>A steady Tuesday on the Charles. The shaded stretch runs between two presses of the lap button; inside it, heart rate holds the plan's target band, under the ceiling, while pace settles near 7:00. The ledger at left summarizes the run.</figcaption></figure>
+</div>
+
+<div class="card">
+ <div class="head"><div class="eyebrow">Trends</div><div class="title">Is efficiency moving?</div></div>
+ <div class="pair">
+ <figure><div class="cs"><a href="training_preview/4a-trends-efficiency.webp"><img src="training_preview/4a-trends-efficiency.webp" alt="Efficiency on each of four routes over fifteen weeks, one dot per easy or long run" loading="lazy"></a></div>
+ <figcaption><span class="draft">draft</span>Efficiency, speed per heartbeat, on each route: one dot per easy or long run over fifteen weeks. Each route is compared only with itself, so the ground stays constant; the slow rise of about 3% is aerobic fitness. The low last dot on the Emerald Necklace is that warm Saturday.</figcaption></figure>
+ <figure><div class="cs"><a href="training_preview/4b-trends-decoupling.webp"><img src="training_preview/4b-trends-decoupling.webp" alt="Heart-rate drift from the first to the second half of each easy run, all below five percent" loading="lazy"></a></div>
+ <figcaption><span class="draft">draft</span>Decoupling: how far heart rate drifts from the first half of an easy run to the second. Long runs sit highest; none reaches the 5% line.</figcaption></figure>
+ </div>
+</div>
+
+<div class="card">
+ <div class="head"><div class="eyebrow">Compare</div><div class="title">Same ground, two days</div></div>
+ <figure><div class="cs"><a href="training_preview/5-compare.webp"><img src="training_preview/5-compare.webp" alt="Two three-lap runs at Fresh Pond six weeks apart, compared segment by segment and folded onto one lap" loading="lazy"></a></div>
+ <figcaption><span class="draft">draft</span>Three laps of Fresh Pond, six weeks apart. Above, each quarter of the loop, lap by lap, compared between the two days (ink: more efficient on the later day; the first two passes fall inside the first five minutes and are left out). Below, both runs folded onto one lap, one line per lap.</figcaption></figure>
+</div>
+
+<div class="card">
+ <div class="head"><div class="eyebrow">Track</div><div class="title">Is the speed coming?</div></div>
+ <div class="pair">
+ <figure><div class="cs"><a href="training_preview/6a-track-ladder.webp"><img src="training_preview/6a-track-ladder.webp" alt="Seven sessions of 1600 meter repeats, each rep's time, faster higher" loading="lazy"></a></div>
+ <figcaption><span class="draft">draft</span>Seven sessions of 1600 m repeats at Downes Field, every rep's time (faster is higher), from just over 6:00 to about 5:50; the mean rest below.</figcaption></figure>
+ <figure><div class="cs"><a href="training_preview/6b-track-inside-reps.webp"><img src="training_preview/6b-track-inside-reps.webp" alt="Heart rate in each quarter of each rep of the latest session, against threshold" loading="lazy"></a></div>
+ <figcaption><span class="draft">draft</span>Inside each rep of the latest session: heart rate by quarter of the distance, against threshold.</figcaption></figure>
+ </div>
+</div>
+
+<div class="card">
+ <div class="yours"><b>Your closing line (optional)</b>e.g. how the system feeds the Log, or what comes next toward Boston.</div>
+ <p class="fine" style="margin:16px 0 0">Illustrative data: invented runs on real routes in Cambridge and Boston. Every number, date and plan is made up; no map, date, route or measurement from the real system appears.</p>
+</div>
+
+<footer><span>Data from Garmin Connect GDPR export · Built with Claude</span><span>Mockup · Training section · for review</span></footer>
+</div></body></html>
